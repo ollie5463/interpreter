@@ -1,12 +1,7 @@
 export class Evaluator {
     constructor() {
         this.operators = {
-            "+": (a, b) => {
-                console.log('a: ', a)
-                console.log('b: ', b)
-                return a + b
-            }
-        }
+            "+": (a, b) =>  a + b }
     }
     evaluateExpression(AST) {
         let output = ''
