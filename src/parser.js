@@ -49,27 +49,18 @@ import { Symbols } from './Symbols';
 // 	return parseTree;
 	
 // };
-export const  parse = function (tokens) {
-	var symbols = {},
-	symbol = function (id, nud, lbp, led) {
-		var sym = symbols[id] || {};
-		symbols[id] = {
-			lbp: sym.lbp || lbp,
-			nud: sym.nud || nud,
-			led: sym.lef || led
-		};
-	};
-
+export const parse = function (tokens) {
+    
 	var interpretToken = function (token) {
-		var sym = Object.create(symbols[token.type]);
+        var sym = Object.create(symbols[token.type]);
 		sym.type = token.type;
 		sym.value = token.value;
 		return sym;
 	};
-
+    
 	var i = 0, token = function () { return interpretToken(tokens[i]); };
 	var advance = function () { i++; return token(); };
-
+    
     const createAbstractSyntaxTree = (rbp = 0) => {
         // create AST
         let left, t = token();
@@ -89,30 +80,18 @@ export const  parse = function (tokens) {
         console.log('left: ', left);
 		return left;
 	};
-
-	const operator = function (id, lbp, rbp, led) {
-		rbp = rbp || lbp;
-		symbol(id, null, lbp, led || function (left) {
-			return {
-				type: id,
-				left: left,
-				right: createAbstractSyntaxTree(rbp)
-			};
-		});
-	}
-
-
-	symbol("(end)");
-
-	symbol('number', function (number) {
-		return number;
-	});
-
-	operator('+', 3);
+    const symbolCreator = new Symbols([
+        ['(end)'],
+        ['number', (number) => number]],
+        [['+', 3, undefined, undefined, createAbstractSyntaxTree]
+    ])
+    var symbols = symbolCreator.symbols;
+    console.log('created symbols: ', symbolCreator.symbols);
 	var parseTree = [];
     while (token().type !== "(end)") {
+        console.log('symbols: ', symbols)
         const node = createAbstractSyntaxTree();
-        console.log('node: ', node)
+        // console.log('node: ', node)
 		parseTree.push(node);
 	}
 	console.log('tree: ', parseTree)
