@@ -23,7 +23,7 @@ export class LexicalAnalyser {
                 continue;
             } else if (type === OPERATOR) {
                 this.tokens.push({
-                    type: PLUS,
+                    type: '+',
                     value: character
                 })
              } else if (type === DIGIT) {
@@ -32,7 +32,7 @@ export class LexicalAnalyser {
                     number += input[++i]
                 }
                 this.tokens.push({ 
-                    type,
+                    type: 'number',
                     value: number
                 })
             }

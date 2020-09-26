@@ -10,5 +10,12 @@ export class Symbols {
             nud: sym.nud || nud,
             led: sym.lef || led
         }
+        console.log('symbols: ', this.symbols)
+    }
+    interpretToken(token) {
+        const sym = Object.create(this.symbols[token.type]);
+		sym.type = token.type;
+		sym.value = token.value;
+		return sym;
     }
 }
