@@ -37,6 +37,7 @@ export const parse = function (tokens) {
         const node = createAbstractSyntaxTree();
 		parseTree.push(node);
 	}
+	console.log('Abstract Syntax Tree: ', parseTree);
 	return parseTree;
 	
 };

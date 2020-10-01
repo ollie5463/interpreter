@@ -1,8 +1,10 @@
   
 const path = require('path');
 const HTMLWebpackPlugin = require('html-webpack-plugin');
+const isProduction = !!(process.env.NODE_ENV === 'production');
+const DropConsoleWebpackPlugin = require('drop-console-webpack-plugin');
 
-module.exports = {
+const config = {
     entry: './src/main.js',
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -13,7 +15,7 @@ module.exports = {
         open: true
     },
     resolve: {
-        extensions: [".ts", ".tsx", ".js"]
+        extensions: [".js"]
     },
     devtool: "source-map",
     plugins: [
@@ -24,3 +26,8 @@ module.exports = {
         })
     ]
 }
+if (isProduction) {
+    config.plugins.push(new DropConsoleWebpackPlugin())
+}
+
+module.exports = config;

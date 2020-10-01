@@ -37,7 +37,8 @@ export class LexicalAnalyser {
                 })
             }
         }
-        this.tokens.push({type: '(end)', value: undefined})
+        this.tokens.push({ type: '(end)', value: undefined })
+        console.log('Tokens: ', this.tokens);
         return this.tokens;
     }
     /**
